@@ -44,7 +44,6 @@
             pointer-events: none;
         }
 
-        /* ===== Icon outline chung ===== */
         .ic {
             width: 16px;
             height: 16px;
@@ -63,6 +62,7 @@
         .ic-lg { width: 20px; height: 20px; stroke-width: 1.6; }
         .ic-xl { width: 48px; height: 48px; stroke-width: 1.4; }
 
+        /* ===== Header ===== */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -85,15 +85,9 @@
             font-weight: 500;
         }
 
-        .header h1 .ic {
-            width: 22px;
-            height: 22px;
-        }
+        .header h1 .ic { width: 22px; height: 22px; }
 
-        .header .brand {
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+        .header .brand { font-weight: 800; letter-spacing: 1px; }
 
         .header-right {
             display: flex;
@@ -111,6 +105,33 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+        }
+
+        .btn-header {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 9px 16px;
+            border-radius: 25px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-header:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-header.active {
+            background: #fff;
+            color: #667eea;
+            border-color: #fff;
         }
 
         .btn-add {
@@ -135,51 +156,17 @@
             background: #f4f6ff;
         }
 
-        /* ===== Nút lọc ===== */
-        .filter-wrapper {
-            position: relative;
-        }
+        /* ===== Dropdown/panel chung ===== */
+        .dropdown-wrapper { position: relative; }
 
-        .btn-filter {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 9px 16px;
-            border-radius: 25px;
-            font-size: 0.86rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        .btn-filter:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-        }
-
-        .btn-filter.active {
-            background: #fff;
-            color: #667eea;
-            border-color: #fff;
-        }
-
-        .btn-filter .caret {
+        .btn-header .caret {
             width: 10px;
             height: 10px;
             stroke-width: 2.2;
             transition: transform 0.2s ease;
         }
 
-        .btn-filter.active .caret,
-        .filter-dropdown.open ~ .btn-filter .caret {
-            transform: rotate(180deg);
-        }
-
-        .filter-dropdown {
+        .dropdown-panel {
             position: absolute;
             top: calc(100% + 8px);
             right: 0;
@@ -187,16 +174,15 @@
             border-radius: 12px;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
             padding: 8px;
-            min-width: 210px;
+            min-width: 220px;
+            max-width: 320px;
             z-index: 20;
             display: none;
             animation: dropdownIn 0.2s ease;
             border: 1px solid #eee;
         }
 
-        .filter-dropdown.open {
-            display: block;
-        }
+        .dropdown-panel.open { display: block; }
 
         @keyframes dropdownIn {
             from { opacity: 0; transform: translateY(-6px); }
@@ -216,10 +202,7 @@
             font-weight: 500;
         }
 
-        .filter-option:hover {
-            background: #f0f2ff;
-            color: #667eea;
-        }
+        .filter-option:hover { background: #f0f2ff; color: #667eea; }
 
         .filter-option.selected {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -235,9 +218,252 @@
             stroke-width: 2.4;
         }
 
-        .filter-option.selected .check {
-            opacity: 1;
+        .filter-option.selected .check { opacity: 1; }
+
+        /* ===== Search ===== */
+        .search-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            min-width: 320px;
+            z-index: 20;
+            display: none;
+            animation: dropdownIn 0.2s ease;
+            border: 1px solid #eee;
         }
+
+        .search-panel.open { display: block; }
+
+        .search-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-wrap .search-icon {
+            position: absolute;
+            left: 12px;
+            color: #a0a0b8;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 36px 10px 36px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            color: #333;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 8px;
+            background: #f0f0f5;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #888;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            padding: 0;
+        }
+
+        .search-clear.show { display: flex; }
+
+        .search-clear:hover { background: #ffe0e0; color: #d32f2f; }
+
+        .search-info {
+            font-size: 0.78rem;
+            color: #888;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 16px;
+        }
+
+        .search-info .found { color: #4caf50; font-weight: 700; }
+        .search-info .not-found { color: #d32f2f; font-weight: 700; }
+
+        mark {
+            background: linear-gradient(180deg, transparent 55%, #ffe58a 55%);
+            color: inherit;
+            font-weight: 700;
+            padding: 0 1px;
+            border-radius: 2px;
+        }
+
+        /* ===== Folder dropdown ===== */
+        .folder-list {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .folder-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 0.88rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .folder-item:hover { background: #f0f2ff; color: #667eea; }
+        .folder-item.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .folder-item .fname {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .folder-item .fcount {
+            background: rgba(102, 126, 234, 0.12);
+            color: #667eea;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .folder-item.selected .fcount {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+        }
+
+        .folder-item .factions {
+            display: none;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .folder-item:hover .factions { display: flex; }
+        .folder-item .factions button {
+            background: rgba(0,0,0,0.06);
+            border: none;
+            border-radius: 6px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.15s;
+            padding: 0;
+        }
+
+        .folder-item.selected .factions button {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .folder-item .factions button:hover {
+            background: rgba(255,255,255,0.35);
+            color: #d32f2f;
+        }
+
+        .folder-divider {
+            height: 1px;
+            background: #eee;
+            margin: 6px 4px;
+        }
+
+        .folder-add-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 0.88rem;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .folder-add-btn:hover { background: #eef0ff; }
+
+        /* ===== Active bar ===== */
+        .active-bar {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 30px 8px 80px;
+            background: #f4f5ff;
+            border-bottom: 1px solid #e4e6f7;
+            font-size: 0.83rem;
+            color: #555;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .active-bar.show { display: flex; }
+
+        .active-bar .label { font-weight: 700; color: #667eea; }
+
+        .active-bar .chip {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            max-width: 320px;
+        }
+
+        .active-bar .chip .chip-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .active-bar .clear {
+            background: none;
+            border: none;
+            color: #d32f2f;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 8px;
+            transition: background 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .active-bar .clear:hover { background: #ffe0e0; }
 
         /* ===== Editor ===== */
         .editor-section {
@@ -299,15 +525,36 @@
             gap: 10px;
         }
 
-        .char-count {
-            color: #999;
-            font-size: 0.85rem;
+        .editor-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .editor-buttons {
-            display: flex;
-            gap: 10px;
+        .char-count { color: #999; font-size: 0.85rem; }
+
+        .editor-folder-select {
+            font-size: 0.82rem;
+            font-family: inherit;
+            padding: 6px 12px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 20px;
+            background: #fff;
+            color: #555;
+            cursor: pointer;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+            max-width: 200px;
         }
+
+        .editor-folder-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+        }
+
+        .editor-buttons { display: flex; gap: 10px; }
 
         .btn {
             padding: 9px 22px;
@@ -332,68 +579,8 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-ghost {
-            background: #eef0f5;
-            color: #555;
-        }
-
-        .btn-ghost:hover {
-            background: #e2e5ee;
-        }
-
-        /* ===== Thanh filter đang áp dụng ===== */
-        .active-filter-bar {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 30px 8px 80px;
-            background: #f4f5ff;
-            border-bottom: 1px solid #e4e6f7;
-            font-size: 0.83rem;
-            color: #555;
-            flex-shrink: 0;
-        }
-
-        .active-filter-bar.show {
-            display: flex;
-        }
-
-        .active-filter-bar .label {
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .active-filter-bar .chip {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.78rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .active-filter-bar .clear {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: #d32f2f;
-            font-size: 0.82rem;
-            font-weight: 700;
-            cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 8px;
-            transition: background 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .active-filter-bar .clear:hover {
-            background: #ffe0e0;
-        }
+        .btn-ghost { background: #eef0f5; color: #555; }
+        .btn-ghost:hover { background: #e2e5ee; }
 
         /* ===== Notes area ===== */
         .notes-section {
@@ -405,22 +592,10 @@
             flex-direction: column;
         }
 
-        .notes-section::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .notes-section::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .notes-section::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-
-        .notes-section::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
+        .notes-section::-webkit-scrollbar { width: 8px; }
+        .notes-section::-webkit-scrollbar-track { background: #f1f1f1; }
+        .notes-section::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        .notes-section::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
 
         .empty-state {
             text-align: center;
@@ -462,14 +637,9 @@
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
         }
 
-        /* ===== PHÂN NHÓM THEO THÁNG ===== */
-        .month-group {
-            margin-bottom: 18px;
-        }
-
-        .month-group:last-child {
-            margin-bottom: 0;
-        }
+        /* ===== Month group ===== */
+        .month-group { margin-bottom: 18px; }
+        .month-group:last-child { margin-bottom: 0; }
 
         .month-header {
             display: flex;
@@ -510,7 +680,7 @@
             background: linear-gradient(90deg, #e0e0f0 0%, transparent 100%);
         }
 
-        /* ===== Grid ô vuông ===== */
+        /* ===== Grid ===== */
         .notes-grid {
             display: grid;
             grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -548,7 +718,6 @@
             pointer-events: none;
         }
 
-        /* Lỗ bấm tròn */
         .note-card::before {
             content: '';
             position: absolute;
@@ -578,7 +747,6 @@
             pointer-events: none;
         }
 
-        /* Thời gian cạnh lỗ bấm */
         .note-time {
             position: absolute;
             top: 6px;
@@ -598,10 +766,7 @@
             line-height: 1.3;
         }
 
-        .note-time .ic {
-            color: #a5a3c8;
-            transition: color 0.22s ease;
-        }
+        .note-time .ic { color: #a5a3c8; transition: color 0.22s ease; }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -621,16 +786,20 @@
             background: radial-gradient(circle at 35% 35%, #f2f1ff 0%, #d3d1f0 55%, #b0aed6 100%);
         }
 
-        .note-card:hover .note-time {
-            color: #667eea;
+        .note-card:hover .note-time { color: #667eea; }
+        .note-card:hover .note-time .ic { color: #667eea; }
+        .note-card:active { transform: translateY(-1px) scale(0.98); }
+
+        .note-card.matched {
+            border-color: #ffb74d;
+            box-shadow:
+                0 2px 4px rgba(255, 152, 0, 0.15),
+                0 8px 20px rgba(255, 152, 0, 0.22),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.9);
         }
 
-        .note-card:hover .note-time .ic {
-            color: #667eea;
-        }
-
-        .note-card:active {
-            transform: translateY(-1px) scale(0.98);
+        .note-card.matched::before {
+            background: radial-gradient(circle at 35% 35%, #fff3e0 0%, #ffcc80 55%, #ffa726 100%);
         }
 
         .note-preview {
@@ -648,12 +817,8 @@
             z-index: 1;
         }
 
-        .note-preview.empty {
-            color: #bbb;
-            font-style: italic;
-        }
+        .note-preview.empty { color: #bbb; font-style: italic; }
 
-        /* Nút "xem" mờ ở góc dưới phải */
         .note-expand-hint {
             position: absolute;
             bottom: 5px;
@@ -664,9 +829,27 @@
             transition: opacity 0.25s ease, color 0.22s ease;
         }
 
-        .note-card:hover .note-expand-hint {
-            opacity: 1;
+        .note-card:hover .note-expand-hint { opacity: 1; color: #667eea; }
+
+        /* Badge thư mục trên card */
+        .note-folder-badge {
+            position: absolute;
+            bottom: 5px;
+            left: 8px;
+            font-size: 0.58rem;
             color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 700;
+            max-width: 65%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
 
         /* ===== Modal ===== */
@@ -683,9 +866,7 @@
             animation: fadeIn 0.2s ease;
         }
 
-        .modal-overlay.open {
-            display: flex;
-        }
+        .modal-overlay.open { display: flex; }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -709,9 +890,7 @@
         .modal::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 5px;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         }
@@ -738,10 +917,21 @@
             display: flex;
             align-items: center;
             gap: 7px;
+            flex-wrap: wrap;
         }
 
-        .modal-time .ic {
-            color: #667eea;
+        .modal-time .ic { color: #667eea; }
+
+        .modal-folder-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .modal-close {
@@ -771,14 +961,8 @@
             flex: 1;
         }
 
-        .modal-body::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 3px;
-        }
+        .modal-body::-webkit-scrollbar { width: 6px; }
+        .modal-body::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
 
         .modal-content {
             color: #333;
@@ -789,9 +973,7 @@
             min-height: 40px;
         }
 
-        .modal-content.edit-mode {
-            display: none;
-        }
+        .modal-content.edit-mode { display: none; }
 
         .modal-edit-area {
             width: 100%;
@@ -805,8 +987,47 @@
             display: none;
         }
 
-        .modal-edit-area.show {
-            display: block;
+        .modal-edit-area.show { display: block; }
+
+        /* Chọn thư mục trong modal */
+        .modal-folder-row {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #eee;
+        }
+
+        .modal-folder-row.show { display: flex; }
+
+        .modal-folder-row label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .modal-folder-row select {
+            flex: 1;
+            font-size: 0.85rem;
+            font-family: inherit;
+            padding: 8px 12px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 20px;
+            background: #fff;
+            color: #555;
+            cursor: pointer;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .modal-folder-row select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
         }
 
         .modal-footer {
@@ -832,23 +1053,11 @@
             gap: 7px;
         }
 
-        .btn-edit {
-            background: #eef0ff;
-            color: #667eea;
-        }
+        .btn-edit { background: #eef0ff; color: #667eea; }
+        .btn-edit:hover { background: #dde2ff; }
 
-        .btn-edit:hover {
-            background: #dde2ff;
-        }
-
-        .btn-delete {
-            background: #ffecec;
-            color: #d32f2f;
-        }
-
-        .btn-delete:hover {
-            background: #ffd9d9;
-        }
+        .btn-delete { background: #ffecec; color: #d32f2f; }
+        .btn-delete:hover { background: #ffd9d9; }
 
         .btn-save-modal {
             background: #4caf50;
@@ -856,9 +1065,7 @@
             display: none;
         }
 
-        .btn-save-modal.show {
-            display: inline-flex;
-        }
+        .btn-save-modal.show { display: inline-flex; }
 
         .btn-cancel-modal {
             background: #e0e0e0;
@@ -866,9 +1073,7 @@
             display: none;
         }
 
-        .btn-cancel-modal.show {
-            display: inline-flex;
-        }
+        .btn-cancel-modal.show { display: inline-flex; }
 
         /* ===== Pagination ===== */
         .pagination {
@@ -883,9 +1088,7 @@
             flex-wrap: wrap;
         }
 
-        .pagination:empty {
-            display: none;
-        }
+        .pagination:empty { display: none; }
 
         .page-btn {
             min-width: 34px;
@@ -918,10 +1121,7 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
-        .page-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .page-info {
             font-size: 0.85rem;
@@ -952,9 +1152,7 @@
             white-space: nowrap;
         }
 
-        .footer .item .ic {
-            color: #7d8bff;
-        }
+        .footer .item .ic { color: #7d8bff; }
 
         .footer .item a {
             color: #a5b4ff;
@@ -963,13 +1161,76 @@
             transition: color 0.2s ease;
         }
 
-        .footer .item a:hover {
-            color: #ffffff;
-            text-decoration: underline;
+        .footer .item a:hover { color: #ffffff; text-decoration: underline; }
+
+        .footer .divider { color: #55566f; }
+
+        /* ===== Prompt tạo thư mục (inline) ===== */
+        .prompt-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 20, 40, 0.5);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            padding: 20px;
         }
 
-        .footer .divider {
-            color: #55566f;
+        .prompt-modal.open { display: flex; }
+
+        .prompt-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            animation: modalIn 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prompt-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .prompt-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prompt-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #e0e0ee;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .prompt-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+        }
+
+        .prompt-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 16px;
         }
 
         /* ===== Responsive ===== */
@@ -985,34 +1246,69 @@
             .notes-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         }
 
+        /* ====== MOBILE ====== */
         @media (max-width: 768px) {
             .app::before { left: 40px; }
 
-            .header { padding: 12px 16px; }
-            .header h1 { font-size: 1rem; }
+            /* Header mobile: gom về bên phải */
+            .header {
+                padding: 12px 16px;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+
+            .header h1 {
+                font-size: 1rem;
+                flex: 0 1 auto;
+            }
             .header h1 .ic { width: 18px; height: 18px; }
-            .header-right { gap: 8px; }
+
+            .header-right {
+                gap: 6px;
+                margin-left: auto;
+                justify-content: flex-end;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            /* Ẩn label text, chỉ giữ icon */
+            .btn-header .btn-text,
+            .btn-add .btn-text { display: none; }
+
+            .btn-header, .btn-add {
+                padding: 8px 10px;
+                min-width: 38px;
+                justify-content: center;
+                gap: 0;
+            }
+            .btn-header .ic,
+            .btn-add .ic { width: 16px; height: 16px; }
 
             .header .note-count {
-                padding: 4px 10px;
-                font-size: 0.72rem;
+                padding: 5px 10px;
+                font-size: 0.7rem;
+                order: -1;
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 2px;
             }
 
-            .btn-add {
-                padding: 7px 12px;
-                font-size: 0.76rem;
+            /* Panel dropdown dùng fixed để không bị cắt */
+            .dropdown-panel,
+            .search-panel {
+                position: fixed;
+                top: auto;
+                right: 12px;
+                left: 12px;
+                max-width: none;
+                min-width: 0;
             }
 
-            .btn-filter {
-                padding: 7px 12px;
-                font-size: 0.76rem;
-            }
-
-            .filter-dropdown { min-width: 190px; }
+            .search-panel { min-width: 0; }
 
             .editor-section,
             .notes-section,
-            .active-filter-bar {
+            .active-bar {
                 padding-left: 52px;
                 padding-right: 14px;
             }
@@ -1031,6 +1327,10 @@
                 height: 17px;
             }
 
+            .editor-actions { flex-direction: column; align-items: stretch; }
+            .editor-meta { justify-content: space-between; }
+            .editor-buttons { justify-content: flex-end; }
+
             .notes-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -1043,42 +1343,20 @@
                 border-radius: 12px;
             }
 
-            .note-card::before {
-                width: 9px;
-                height: 9px;
-                top: 7px;
-                left: 8px;
-            }
+            .note-card::before { width: 9px; height: 9px; top: 7px; left: 8px; }
+            .note-card .hole-ring { width: 14px; height: 14px; top: 4px; left: 5px; }
+            .note-time { top: 6px; left: 26px; font-size: 0.62rem; }
+            .note-preview { font-size: 0.75rem; -webkit-line-clamp: 4; }
 
-            .note-card .hole-ring {
-                width: 14px;
-                height: 14px;
-                top: 4px;
-                left: 5px;
-            }
-
-            .note-time {
-                top: 6px;
-                left: 26px;
-                font-size: 0.62rem;
-            }
-
-            .note-preview {
-                font-size: 0.75rem;
-                -webkit-line-clamp: 4;
+            .note-folder-badge {
+                font-size: 0.55rem;
+                padding: 1px 5px;
+                max-width: 70%;
             }
 
             .month-header { gap: 8px; }
-
-            .month-badge {
-                font-size: 0.78rem;
-                padding: 5px 12px;
-            }
-
-            .month-count {
-                font-size: 0.68rem;
-                padding: 2px 8px;
-            }
+            .month-badge { font-size: 0.78rem; padding: 5px 12px; }
+            .month-count { font-size: 0.68rem; padding: 2px 8px; }
 
             .pagination {
                 padding: 12px 14px 12px 52px;
@@ -1109,24 +1387,15 @@
 
             .footer .divider { display: none; }
 
-            .modal {
-                max-height: 90vh;
-                border-radius: 14px;
-            }
-
-            .modal-header,
-            .modal-body,
-            .modal-footer {
+            .modal { max-height: 90vh; border-radius: 14px; }
+            .modal-header, .modal-body, .modal-footer {
                 padding-left: 16px;
                 padding-right: 16px;
             }
-
             .modal-footer { justify-content: stretch; }
+            .btn-modal { flex: 1; justify-content: center; }
 
-            .btn-modal {
-                flex: 1;
-                justify-content: center;
-            }
+            .modal-folder-row { flex-direction: column; align-items: stretch; }
         }
 
         @media (max-width: 480px) {
@@ -1142,45 +1411,18 @@
                 border-width: 1.2px;
             }
 
-            .note-card::before {
-                width: 8px;
-                height: 8px;
-                top: 6px;
-                left: 7px;
-            }
-
-            .note-card .hole-ring {
-                width: 12px;
-                height: 12px;
-                top: 4px;
-                left: 5px;
-            }
-
-            .note-time {
-                top: 5px;
-                left: 24px;
-                font-size: 0.58rem;
-            }
-
-            .note-preview {
-                font-size: 0.68rem;
-                -webkit-line-clamp: 4;
-            }
-
+            .note-card::before { width: 8px; height: 8px; top: 6px; left: 7px; }
+            .note-card .hole-ring { width: 12px; height: 12px; top: 4px; left: 5px; }
+            .note-time { top: 5px; left: 24px; font-size: 0.58rem; }
+            .note-preview { font-size: 0.68rem; -webkit-line-clamp: 4; }
             .note-expand-hint { display: none; }
         }
 
         @media (max-width: 380px) {
             .header h1 { font-size: 0.9rem; }
             .header .note-count { display: none; }
-
             .note-card { max-width: 105px; }
-
-            .note-time {
-                font-size: 0.55rem;
-                left: 22px;
-            }
-
+            .note-time { font-size: 0.55rem; left: 22px; }
             .note-preview { font-size: 0.65rem; }
         }
     </style>
@@ -1199,13 +1441,51 @@
                     <span id="noteCount">0 ghi chú</span>
                 </span>
 
-                <div class="filter-wrapper">
-                    <button class="btn-filter" id="filterBtn" onclick="toggleFilterDropdown(event)">
-                        <svg class="ic ic-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                        <span id="filterBtnLabel">Lọc thời gian</span>
+                <!-- Folder -->
+                <div class="dropdown-wrapper">
+                    <button class="btn-header" id="folderBtn" onclick="toggleFolderPanel(event)">
+                        <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <span class="btn-text" id="folderBtnLabel">Thư mục</span>
                         <svg class="ic caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
-                    <div class="filter-dropdown" id="filterDropdown">
+                    <div class="dropdown-panel" id="folderPanel" onclick="event.stopPropagation()">
+                        <div class="folder-list" id="folderList"></div>
+                        <div class="folder-divider"></div>
+                        <div class="folder-add-btn" onclick="promptNewFolder()">
+                            <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                            Tạo thư mục mới
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="dropdown-wrapper">
+                    <button class="btn-header" id="searchBtn" onclick="toggleSearchPanel(event)">
+                        <svg class="ic ic-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <span class="btn-text">Tìm kiếm</span>
+                    </button>
+                    <div class="search-panel" id="searchPanel" onclick="event.stopPropagation()">
+                        <div class="search-input-wrap">
+                            <svg class="ic ic-sm search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" class="search-input" id="searchInput" placeholder="Nhập từ khóa cần tìm..." autocomplete="off">
+                            <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Xóa">
+                                <svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <div class="search-info" id="searchInfo">
+                            Nhập để tìm trong nội dung ghi chú
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter -->
+                <div class="dropdown-wrapper">
+                    <button class="btn-header" id="filterBtn" onclick="toggleFilterDropdown(event)">
+                        <svg class="ic ic-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        <span class="btn-text" id="filterBtnLabel">Lọc</span>
+                        <svg class="ic caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-panel" id="filterDropdown">
                         <div class="filter-option" data-filter="all" onclick="applyFilter('all')">
                             <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
                             <span>Tất cả ghi chú</span>
@@ -1236,7 +1516,7 @@
 
                 <button class="btn-add" id="toggleEditorBtn">
                     <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-                    Thêm ghi chú
+                    <span class="btn-text">Thêm ghi chú</span>
                 </button>
             </div>
         </div>
@@ -1247,7 +1527,12 @@
                 placeholder="Viết ghi chú của bạn ở đây... (Ctrl + Enter để lưu nhanh)"
             ></textarea>
             <div class="editor-actions">
-                <span class="char-count" id="charCount">0 ký tự</span>
+                <div class="editor-meta">
+                    <span class="char-count" id="charCount">0 ký tự</span>
+                    <select class="editor-folder-select" id="editorFolderSelect" title="Chọn thư mục">
+                        <option value="">📁 Không thư mục</option>
+                    </select>
+                </div>
                 <div class="editor-buttons">
                     <button class="btn btn-ghost" id="cancelBtn">Hủy</button>
                     <button class="btn btn-primary" id="saveBtn">
@@ -1258,15 +1543,27 @@
             </div>
         </div>
 
-        <div class="active-filter-bar" id="activeFilterBar">
-            <span class="label">Đang lọc:</span>
-            <span class="chip" id="activeFilterChip">
-                <svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
-                <span id="activeFilterChipLabel">Hôm nay</span>
+        <div class="active-bar" id="activeBar">
+            <span class="label">Đang áp dụng:</span>
+
+            <span class="chip" id="activeFolderChip" style="display:none">
+                <svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span class="chip-text" id="activeFolderChipLabel">Thư mục</span>
             </span>
-            <button class="clear" onclick="applyFilter('all')">
+
+            <span class="chip" id="activeFilterChip" style="display:none">
+                <svg class="ic ic-xs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span class="chip-text" id="activeFilterChipLabel">Hôm nay</span>
+            </span>
+
+            <span class="chip" id="activeSearchChip" style="display:none; background:linear-gradient(135deg,#ffa726 0%,#fb8c00 100%)">
+                <svg class="ic ic-xs" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+                <span class="chip-text" id="activeSearchChipLabel">"từ khóa"</span>
+            </span>
+
+            <button class="clear" onclick="clearAllFilters()">
                 <svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-                Xóa lọc
+                Xóa hết
             </button>
         </div>
 
@@ -1287,12 +1584,17 @@
         </footer>
     </div>
 
+    <!-- Modal chi tiết note -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <div class="modal-time">
                     <svg class="ic ic-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                     <span id="modalTime">—</span>
+                    <span class="modal-folder-tag" id="modalFolderTag" style="display:none">
+                        <svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <span id="modalFolderTagText">Thư mục</span>
+                    </span>
                 </div>
                 <button class="modal-close" onclick="closeModal()">
                     <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -1301,11 +1603,22 @@
             <div class="modal-body">
                 <div class="modal-content" id="modalContent"></div>
                 <textarea class="modal-edit-area" id="modalEditArea"></textarea>
+                <div class="modal-folder-row" id="modalFolderRow">
+                    <label>
+                        <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        Di chuyển vào:
+                    </label>
+                    <select id="modalFolderSelect"></select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-modal btn-delete" id="modalDeleteBtn">
                     <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
                     Xóa
+                </button>
+                <button class="btn-modal btn-edit" id="modalFolderMoveBtn">
+                    <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    Đổi thư mục
                 </button>
                 <button class="btn-modal btn-edit" id="modalEditBtn">
                     <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
@@ -1320,26 +1633,44 @@
         </div>
     </div>
 
+    <!-- Prompt tạo/đổi tên thư mục -->
+    <div class="prompt-modal" id="promptModal">
+        <div class="prompt-box" onclick="event.stopPropagation()">
+            <div class="prompt-title" id="promptTitle">
+                <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span id="promptTitleText">Tạo thư mục mới</span>
+            </div>
+            <input type="text" class="prompt-input" id="promptInput" placeholder="Nhập tên thư mục..." maxlength="50">
+            <div class="prompt-actions">
+                <button class="btn btn-ghost" onclick="closePrompt()">Hủy</button>
+                <button class="btn btn-primary" id="promptConfirmBtn">Tạo</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const STORAGE_KEY = 'hmb_agency_notes';
+        const FOLDER_KEY = 'hmb_agency_folders';
         const NOTES_PER_PAGE_DESKTOP = 40;
         const NOTES_PER_PAGE_MOBILE = 10;
 
         let currentFilter = 'all';
+        let currentSearch = '';
+        let currentFolder = 'all'; // 'all' | 'none' | folderId
         let currentPage = 1;
         let currentNoteId = null;
+        let promptMode = 'create'; // 'create' | 'rename'
+        let promptRenameId = null;
 
-        // ===== Icon SVG dùng trong JS (outline) =====
         const ICONS = {
-            clock: `<svg class="ic ic-xs" viewBox="0 0 24 24" style="color:#a5a3c8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
-            calendar: `<svg class="ic ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>`,
-            eye: `<svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
             file: `<svg class="ic ic-xl" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>`,
             search: `<svg class="ic ic-xl" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>`,
-            filter: `<svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>`,
+            folder: `<svg class="ic ic-xl" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
             plus: `<svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
             chevronL: `<svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>`,
-            chevronR: `<svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>`
+            chevronR: `<svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>`,
+            edit: `<svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
+            trash: `<svg class="ic ic-xs" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>`
         };
 
         function getNotesPerPage() {
@@ -1348,30 +1679,68 @@
                 : NOTES_PER_PAGE_DESKTOP;
         }
 
-        // ===== Dữ liệu =====
+        // ===== Notes data =====
         function getNotes() {
             try {
                 const data = localStorage.getItem(STORAGE_KEY);
                 return data ? JSON.parse(data) : [];
-            } catch (e) {
-                console.error('Lỗi đọc dữ liệu:', e);
-                return [];
-            }
+            } catch (e) { return []; }
         }
 
         function saveNotes(notes) {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
             } catch (e) {
-                console.error('Lỗi lưu dữ liệu:', e);
                 alert('Không thể lưu ghi chú. Bộ nhớ có thể đã đầy!');
             }
         }
 
-        // ===== Lọc =====
+        // ===== Folders data =====
+        function getFolders() {
+            try {
+                const data = localStorage.getItem(FOLDER_KEY);
+                return data ? JSON.parse(data) : [];
+            } catch (e) { return []; }
+        }
+
+        function saveFolders(folders) {
+            try {
+                localStorage.setItem(FOLDER_KEY, JSON.stringify(folders));
+            } catch (e) {
+                alert('Không thể lưu thư mục!');
+            }
+        }
+
+        function getFolderById(id) {
+            return getFolders().find(f => f.id === id);
+        }
+
+        function getFolderNoteCount(folderId) {
+            return getNotes().filter(n => n.folderId === folderId).length;
+        }
+
+        function getUnfiledCount() {
+            return getNotes().filter(n => !n.folderId).length;
+        }
+
+        // ===== Search helper =====
+        function removeDiacritics(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
+        }
+
+        function noteMatchesSearch(note, keyword) {
+            if (!keyword) return true;
+            const content = (note.content || '').toLowerCase();
+            const contentNoDiacritic = removeDiacritics(note.content || '');
+            const keywordLower = keyword.toLowerCase();
+            const keywordNoDiacritic = removeDiacritics(keyword);
+            return content.includes(keywordLower) || contentNoDiacritic.includes(keywordNoDiacritic);
+        }
+
+        // ===== Filter =====
         function filterNotesByTime(notes) {
             if (currentFilter === 'all') return notes;
-
             const now = new Date();
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -1380,19 +1749,23 @@
                 switch (currentFilter) {
                     case 'today': return d >= startOfToday;
                     case 'week': {
-                        const weekAgo = new Date(now);
-                        weekAgo.setDate(now.getDate() - 7);
-                        return d >= weekAgo;
+                        const w = new Date(now); w.setDate(now.getDate() - 7);
+                        return d >= w;
                     }
                     case 'month': {
-                        const monthAgo = new Date(now);
-                        monthAgo.setDate(now.getDate() - 30);
-                        return d >= monthAgo;
+                        const m = new Date(now); m.setDate(now.getDate() - 30);
+                        return d >= m;
                     }
                     case 'year': return d.getFullYear() === now.getFullYear();
                     default: return true;
                 }
             });
+        }
+
+        function filterNotesByFolder(notes) {
+            if (currentFolder === 'all') return notes;
+            if (currentFolder === 'none') return notes.filter(n => !n.folderId);
+            return notes.filter(n => n.folderId === currentFolder);
         }
 
         function getFilterLabel(filter) {
@@ -1406,9 +1779,355 @@
             return labels[filter] || labels.all;
         }
 
+        // ===== Toggle panels =====
+        function closeAllPanels() {
+            document.getElementById('folderPanel').classList.remove('open');
+            document.getElementById('searchPanel').classList.remove('open');
+            document.getElementById('filterDropdown').classList.remove('open');
+        }
+
+        function toggleFolderPanel(e) {
+            e.stopPropagation();
+            const p = document.getElementById('folderPanel');
+            const willOpen = !p.classList.contains('open');
+            closeAllPanels();
+            if (willOpen) {
+                renderFolderList();
+                p.classList.add('open');
+            }
+        }
+
+        function toggleSearchPanel(e) {
+            e.stopPropagation();
+            const p = document.getElementById('searchPanel');
+            const willOpen = !p.classList.contains('open');
+            closeAllPanels();
+            if (willOpen) {
+                p.classList.add('open');
+                setTimeout(() => {
+                    const inp = document.getElementById('searchInput');
+                    inp.focus();
+                    inp.select();
+                }, 80);
+            }
+        }
+
         function toggleFilterDropdown(e) {
             e.stopPropagation();
-            document.getElementById('filterDropdown').classList.toggle('open');
+            const p = document.getElementById('filterDropdown');
+            const willOpen = !p.classList.contains('open');
+            closeAllPanels();
+            if (willOpen) p.classList.add('open');
+        }
+
+        document.addEventListener('click', (e) => {
+            const wrappers = document.querySelectorAll('.dropdown-wrapper');
+            let inside = false;
+            wrappers.forEach(w => { if (w.contains(e.target)) inside = true; });
+            if (!inside) closeAllPanels();
+        });
+
+        // ===== Folder rendering =====
+        function renderFolderList() {
+            const folders = getFolders();
+            const list = document.getElementById('folderList');
+
+            const allCount = getNotes().length;
+            const unfiledCount = getUnfiledCount();
+
+            let html = `
+                <div class="folder-item ${currentFolder === 'all' ? 'selected' : ''}" onclick="selectFolder('all')">
+                    <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M9 11H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/><path d="M20 11h-5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/><path d="M9 20H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/><path d="M20 20h-5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/></svg>
+                    <span class="fname">Tất cả ghi chú</span>
+                    <span class="fcount">${allCount}</span>
+                </div>
+                <div class="folder-item ${currentFolder === 'none' ? 'selected' : ''}" onclick="selectFolder('none')">
+                    <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                    <span class="fname">Không có thư mục</span>
+                    <span class="fcount">${unfiledCount}</span>
+                </div>
+            `;
+
+            if (folders.length > 0) {
+                html += `<div class="folder-divider"></div>`;
+                folders.forEach(f => {
+                    const cnt = getFolderNoteCount(f.id);
+                    html += `
+                        <div class="folder-item ${currentFolder === f.id ? 'selected' : ''}" onclick="selectFolder('${f.id}')">
+                            <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                            <span class="fname">${escapeHtml(f.name)}</span>
+                            <span class="fcount">${cnt}</span>
+                            <span class="factions">
+                                <button onclick="event.stopPropagation();promptRenameFolder('${f.id}')" title="Đổi tên">${ICONS.edit}</button>
+                                <button onclick="event.stopPropagation();deleteFolder('${f.id}')" title="Xóa">${ICONS.trash}</button>
+                            </span>
+                        </div>
+                    `;
+                });
+            }
+
+            list.innerHTML = html;
+        }
+
+        function selectFolder(id) {
+            currentFolder = id;
+            currentPage = 1;
+            document.getElementById('folderPanel').classList.remove('open');
+
+            const btn = document.getElementById('folderBtn');
+            const label = document.getElementById('folderBtnLabel');
+            if (id === 'all') {
+                btn.classList.remove('active');
+                label.textContent = 'Thư mục';
+            } else if (id === 'none') {
+                btn.classList.add('active');
+                label.textContent = 'Không thư mục';
+            } else {
+                btn.classList.add('active');
+                const f = getFolderById(id);
+                label.textContent = f ? f.name : 'Thư mục';
+            }
+
+            updateActiveBar();
+            renderAll();
+        }
+
+        // ===== Prompt tạo/đổi tên =====
+        function promptNewFolder() {
+            closeAllPanels();
+            promptMode = 'create';
+            promptRenameId = null;
+            document.getElementById('promptTitleText').textContent = 'Tạo thư mục mới';
+            document.getElementById('promptConfirmBtn').textContent = 'Tạo';
+            document.getElementById('promptInput').value = '';
+            document.getElementById('promptModal').classList.add('open');
+            setTimeout(() => document.getElementById('promptInput').focus(), 100);
+        }
+
+        function promptRenameFolder(id) {
+            closeAllPanels();
+            const f = getFolderById(id);
+            if (!f) return;
+            promptMode = 'rename';
+            promptRenameId = id;
+            document.getElementById('promptTitleText').textContent = 'Đổi tên thư mục';
+            document.getElementById('promptConfirmBtn').textContent = 'Lưu';
+            document.getElementById('promptInput').value = f.name;
+            document.getElementById('promptModal').classList.add('open');
+            setTimeout(() => {
+                const inp = document.getElementById('promptInput');
+                inp.focus();
+                inp.select();
+            }, 100);
+        }
+
+        function closePrompt() {
+            document.getElementById('promptModal').classList.remove('open');
+            promptRenameId = null;
+        }
+
+        function confirmPrompt() {
+            const name = document.getElementById('promptInput').value.trim();
+            if (!name) {
+                alert('Vui lòng nhập tên thư mục!');
+                return;
+            }
+
+            const folders = getFolders();
+
+            if (promptMode === 'create') {
+                // Kiểm tra trùng tên
+                if (folders.some(f => f.name.toLowerCase() === name.toLowerCase())) {
+                    alert('Tên thư mục đã tồn tại!');
+                    return;
+                }
+                folders.push({
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                    name: name,
+                    createdAt: new Date().toISOString()
+                });
+                saveFolders(folders);
+            } else if (promptMode === 'rename') {
+                if (folders.some(f => f.id !== promptRenameId && f.name.toLowerCase() === name.toLowerCase())) {
+                    alert('Tên thư mục đã tồn tại!');
+                    return;
+                }
+                const f = folders.find(f => f.id === promptRenameId);
+                if (f) f.name = name;
+                saveFolders(folders);
+            }
+
+            closePrompt();
+            renderFolderList();
+            refreshFolderSelects();
+            updateFolderBtnLabel();
+            updateActiveBar();
+        }
+
+        function deleteFolder(id) {
+            const f = getFolderById(id);
+            if (!f) return;
+
+            const cnt = getFolderNoteCount(id);
+            const msg = cnt > 0
+                ? `Thư mục "${f.name}" có ${cnt} ghi chú. Xóa thư mục sẽ chuyển các ghi chú này ra "Không thư mục". Tiếp tục?`
+                : `Bạn có chắc muốn xóa thư mục "${f.name}"?`;
+
+            if (!confirm(msg)) return;
+
+            // Chuyển notes ra khỏi folder
+            const notes = getNotes();
+            notes.forEach(n => { if (n.folderId === id) delete n.folderId; });
+            saveNotes(notes);
+
+            // Xóa folder
+            const folders = getFolders().filter(f => f.id !== id);
+            saveFolders(folders);
+
+            if (currentFolder === id) {
+                selectFolder('all');
+            } else {
+                renderFolderList();
+                refreshFolderSelects();
+                updateActiveBar();
+                renderAll();
+            }
+        }
+
+        function updateFolderBtnLabel() {
+            const btn = document.getElementById('folderBtn');
+            const label = document.getElementById('folderBtnLabel');
+            if (currentFolder === 'all') {
+                btn.classList.remove('active');
+                label.textContent = 'Thư mục';
+            } else if (currentFolder === 'none') {
+                btn.classList.add('active');
+                label.textContent = 'Không thư mục';
+            } else {
+                btn.classList.add('active');
+                const f = getFolderById(currentFolder);
+                label.textContent = f ? f.name : 'Thư mục';
+            }
+        }
+
+        // ===== Folder selects trong editor + modal =====
+        function refreshFolderSelects() {
+            const folders = getFolders();
+
+            // Editor select
+            const editorSel = document.getElementById('editorFolderSelect');
+            const editorVal = editorSel.value;
+            editorSel.innerHTML = `<option value="">📁 Không thư mục</option>` +
+                folders.map(f => `<option value="${f.id}">📁 ${escapeHtml(f.name)}</option>`).join('');
+            if (editorVal) editorSel.value = editorVal;
+
+            // Modal select
+            const modalSel = document.getElementById('modalFolderSelect');
+            const modalVal = modalSel.value;
+            modalSel.innerHTML = `<option value="">— Không thư mục —</option>` +
+                folders.map(f => `<option value="${f.id}">${escapeHtml(f.name)}</option>`).join('');
+            if (modalVal) modalSel.value = modalVal;
+        }
+
+        // ===== Search =====
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            currentSearch = '';
+            currentPage = 1;
+            updateSearchUI();
+            updateActiveBar();
+            renderAll();
+            document.getElementById('searchInput').focus();
+        }
+
+        function handleSearchInput() {
+            currentSearch = document.getElementById('searchInput').value;
+            currentPage = 1;
+            updateSearchUI();
+            updateActiveBar();
+            renderAll();
+        }
+
+        function updateSearchUI() {
+            const clearBtn = document.getElementById('searchClear');
+            const info = document.getElementById('searchInfo');
+
+            if (currentSearch.trim()) {
+                clearBtn.classList.add('show');
+                const matched = getNotes().filter(n => {
+                    if (!noteMatchesSearch(n, currentSearch.trim())) return false;
+                    if (currentFolder === 'all') return true;
+                    if (currentFolder === 'none') return !n.folderId;
+                    return n.folderId === currentFolder;
+                }).length;
+                if (matched > 0) {
+                    info.innerHTML = `Tìm thấy <span class="found">${matched}</span> ghi chú`;
+                } else {
+                    info.innerHTML = `<span class="not-found">Không tìm thấy ghi chú nào</span>`;
+                }
+            } else {
+                clearBtn.classList.remove('show');
+                info.innerHTML = `Nhập để tìm trong nội dung ghi chú`;
+            }
+        }
+
+        // ===== Active bar =====
+        function updateActiveBar() {
+            const bar = document.getElementById('activeBar');
+            const folderChip = document.getElementById('activeFolderChip');
+            const filterChip = document.getElementById('activeFilterChip');
+            const searchChip = document.getElementById('activeSearchChip');
+
+            const hasFolder = currentFolder !== 'all';
+            const hasFilter = currentFilter !== 'all';
+            const hasSearch = currentSearch.trim() !== '';
+
+            if (hasFolder) {
+                folderChip.style.display = 'inline-flex';
+                let label;
+                if (currentFolder === 'none') label = 'Không thư mục';
+                else {
+                    const f = getFolderById(currentFolder);
+                    label = f ? f.name : 'Thư mục';
+                }
+                document.getElementById('activeFolderChipLabel').textContent = label;
+            } else folderChip.style.display = 'none';
+
+            if (hasFilter) {
+                filterChip.style.display = 'inline-flex';
+                document.getElementById('activeFilterChipLabel').textContent = getFilterLabel(currentFilter);
+            } else filterChip.style.display = 'none';
+
+            if (hasSearch) {
+                searchChip.style.display = 'inline-flex';
+                const text = currentSearch.trim();
+                document.getElementById('activeSearchChipLabel').textContent =
+                    `"${text.length > 25 ? text.slice(0, 25) + '…' : text}"`;
+            } else searchChip.style.display = 'none';
+
+            if (hasFolder || hasFilter || hasSearch) bar.classList.add('show');
+            else bar.classList.remove('show');
+        }
+
+        function clearAllFilters() {
+            currentFilter = 'all';
+            currentSearch = '';
+            currentFolder = 'all';
+            currentPage = 1;
+
+            const filterBtn = document.getElementById('filterBtn');
+            filterBtn.classList.remove('active');
+            document.getElementById('filterBtnLabel').textContent = 'Lọc';
+
+            document.querySelectorAll('.filter-option').forEach(opt => {
+                opt.classList.toggle('selected', opt.dataset.filter === 'all');
+            });
+
+            document.getElementById('searchInput').value = '';
+            updateSearchUI();
+            updateFolderBtnLabel();
+            updateActiveBar();
+            renderAll();
         }
 
         function applyFilter(filter) {
@@ -1417,100 +2136,99 @@
             document.getElementById('filterDropdown').classList.remove('open');
 
             const filterBtn = document.getElementById('filterBtn');
-            const filterBtnLabel = document.getElementById('filterBtnLabel');
+            const label = document.getElementById('filterBtnLabel');
             if (filter === 'all') {
                 filterBtn.classList.remove('active');
-                filterBtnLabel.textContent = 'Lọc thời gian';
+                label.textContent = 'Lọc';
             } else {
                 filterBtn.classList.add('active');
-                filterBtnLabel.textContent = getFilterLabel(filter);
+                label.textContent = getFilterLabel(filter);
             }
 
             document.querySelectorAll('.filter-option').forEach(opt => {
                 opt.classList.toggle('selected', opt.dataset.filter === filter);
             });
 
-            const bar = document.getElementById('activeFilterBar');
-            const chipLabel = document.getElementById('activeFilterChipLabel');
-            if (filter === 'all') {
-                bar.classList.remove('show');
-            } else {
-                bar.classList.add('show');
-                chipLabel.textContent = getFilterLabel(filter);
-            }
-
+            updateActiveBar();
             renderAll();
         }
 
-        document.addEventListener('click', (e) => {
-            const wrapper = document.querySelector('.filter-wrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                document.getElementById('filterDropdown').classList.remove('open');
-            }
-        });
-
-        // ===== Format thời gian =====
+        // ===== Format time =====
         function formatTime(isoString) {
-            const date = new Date(isoString);
-            const timeStr = date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-            const dateStr = date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            return `${timeStr} - ${dateStr}`;
+            const d = new Date(isoString);
+            const t = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            const s = d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            return `${t} - ${s}`;
         }
 
         function formatTimeShort(isoString) {
-            const date = new Date(isoString);
+            const d = new Date(isoString);
             const now = new Date();
-            const timeStr = date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-            const dayStr = String(date.getDate()).padStart(2, '0');
-            const monthStr = String(date.getMonth() + 1).padStart(2, '0');
-
-            if (date.toDateString() === now.toDateString()) return timeStr;
-            if (date.getFullYear() === now.getFullYear()) return `${dayStr}/${monthStr} • ${timeStr}`;
-            const yearStr = String(date.getFullYear()).slice(-2);
-            return `${dayStr}/${monthStr}/${yearStr} • ${timeStr}`;
+            const t = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            if (d.toDateString() === now.toDateString()) return t;
+            if (d.getFullYear() === now.getFullYear()) return `${day}/${month} • ${t}`;
+            return `${day}/${month}/${String(d.getFullYear()).slice(-2)} • ${t}`;
         }
 
-        // ===== Nhóm tháng =====
+        // ===== Month group =====
         function getMonthKey(isoString) {
             const d = new Date(isoString);
             return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
         }
 
         function getMonthLabel(monthKey) {
-            const [year, month] = monthKey.split('-');
-            return `Tháng ${parseInt(month, 10)}/${year}`;
+            const [y, m] = monthKey.split('-');
+            return `Tháng ${parseInt(m, 10)}/${y}`;
         }
 
         function getFilteredSortedNotes() {
-            const filtered = filterNotesByTime(getNotes());
-            return filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            let notes = getNotes();
+            notes = filterNotesByFolder(notes);
+            notes = filterNotesByTime(notes);
+
+            const kw = currentSearch.trim();
+            if (kw) notes = notes.filter(n => noteMatchesSearch(n, kw));
+
+            return notes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
 
         function groupNotesByMonth(notes) {
             const groups = {};
             const order = [];
-
-            notes.forEach(note => {
-                const key = getMonthKey(note.createdAt);
-                if (!groups[key]) {
-                    groups[key] = [];
-                    order.push(key);
-                }
-                groups[key].push(note);
+            notes.forEach(n => {
+                const k = getMonthKey(n.createdAt);
+                if (!groups[k]) { groups[k] = []; order.push(k); }
+                groups[k].push(n);
             });
-
             order.sort((a, b) => b.localeCompare(a));
-
-            return order.map(key => ({
-                monthKey: key,
-                label: getMonthLabel(key),
-                notes: groups[key]
-            }));
+            return order.map(k => ({ monthKey: k, label: getMonthLabel(k), notes: groups[k] }));
         }
 
         function getTotalPages() {
             const total = getFilteredSortedNotes().length;
             return Math.max(1, Math.ceil(total / getNotesPerPage()));
+        }
+
+        // ===== Highlight =====
+        function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlightKeyword(text, keyword) {
+            const safe = escapeHtml(text);
+            if (!keyword) return safe;
+            const k = keyword.trim();
+            if (!k) return safe;
+            try {
+                const re = new RegExp(`(${escapeRegex(k)})`, 'gi');
+                return safe.replace(re, '<mark>$1</mark>');
+            } catch (e) { return safe; }
         }
 
         // ===== Render =====
@@ -1526,20 +2244,29 @@
             const noteCount = document.getElementById('noteCount');
             const pagination = document.getElementById('pagination');
 
-            if (currentFilter === 'all') {
-                noteCount.textContent = `${allNotesCount} ghi chú`;
-            } else {
-                noteCount.textContent = `${notes.length}/${allNotesCount} ghi chú`;
-            }
+            const hasAny = currentFolder !== 'all' || currentFilter !== 'all' || currentSearch.trim() !== '';
+            if (!hasAny) noteCount.textContent = `${allNotesCount} ghi chú`;
+            else noteCount.textContent = `${notes.length}/${allNotesCount} ghi chú`;
 
             if (notes.length === 0) {
-                const msg = currentFilter === 'all'
-                    ? 'Chưa có ghi chú nào. Hãy viết ghi chú đầu tiên!'
-                    : 'Không có ghi chú nào trong khoảng thời gian này.';
-                const icon = currentFilter === 'all' ? ICONS.file : ICONS.search;
-                const btn = currentFilter === 'all'
-                    ? `<button class="btn-add-empty" onclick="openEditor()">${ICONS.plus} Thêm ghi chú đầu tiên</button>`
-                    : `<button class="btn-add-empty" onclick="applyFilter('all')">↩ Xóa bộ lọc</button>`;
+                let msg, icon, btn;
+                if (currentSearch.trim()) {
+                    msg = `Không tìm thấy ghi chú nào chứa "${currentSearch.trim()}"`;
+                    icon = ICONS.search;
+                    btn = `<button class="btn-add-empty" onclick="clearSearch()">Xóa từ khóa</button>`;
+                } else if (currentFolder !== 'all') {
+                    msg = 'Thư mục này chưa có ghi chú nào.';
+                    icon = ICONS.folder;
+                    btn = `<button class="btn-add-empty" onclick="openEditor()">${ICONS.plus} Thêm ghi chú</button>`;
+                } else if (currentFilter !== 'all') {
+                    msg = 'Không có ghi chú nào trong khoảng thời gian này.';
+                    icon = ICONS.search;
+                    btn = `<button class="btn-add-empty" onclick="clearAllFilters()">Xóa bộ lọc</button>`;
+                } else {
+                    msg = 'Chưa có ghi chú nào. Hãy viết ghi chú đầu tiên!';
+                    icon = ICONS.file;
+                    btn = `<button class="btn-add-empty" onclick="openEditor()">${ICONS.plus} Thêm ghi chú đầu tiên</button>`;
+                }
                 notesList.innerHTML = `
                     <div class="empty-state">
                         <div class="icon-wrap">${icon}</div>
@@ -1560,20 +2287,41 @@
             const pageNotes = notes.slice(start, end);
 
             const groups = groupNotesByMonth(pageNotes);
+            const keyword = currentSearch.trim();
 
             notesList.innerHTML = groups.map(group => {
                 const gridHtml = group.notes.map(note => {
-                    const preview = note.content.trim() || '(Ghi chú trống)';
+                    const rawContent = note.content.trim() || '(Ghi chú trống)';
                     const isEmpty = !note.content.trim();
                     const timeShort = formatTimeShort(note.createdAt);
+
+                    const previewHtml = isEmpty
+                        ? escapeHtml(rawContent)
+                        : (keyword ? highlightKeyword(rawContent, keyword) : escapeHtml(rawContent));
+
+                    const matchedClass = (keyword && noteMatchesSearch(note, keyword)) ? ' matched' : '';
+
+                    // Badge thư mục
+                    let folderBadge = '';
+                    if (note.folderId) {
+                        const f = getFolderById(note.folderId);
+                        if (f) {
+                            folderBadge = `<span class="note-folder-badge" title="${escapeHtml(f.name)}">
+                                <svg class="ic ic-xs" viewBox="0 0 24 24" style="width:9px;height:9px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                ${escapeHtml(f.name)}
+                            </span>`;
+                        }
+                    }
+
                     return `
-                        <div class="note-card" onclick="openModal('${note.id}')">
+                        <div class="note-card${matchedClass}" onclick="openModal('${note.id}')">
                             <span class="hole-ring"></span>
                             <span class="note-time">
                                 <svg class="ic ic-xs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                                 ${timeShort}
                             </span>
-                            <div class="note-preview ${isEmpty ? 'empty' : ''}">${escapeHtml(preview)}</div>
+                            <div class="note-preview ${isEmpty ? 'empty' : ''}">${previewHtml}</div>
+                            ${folderBadge}
                             <span class="note-expand-hint">
                                 <svg class="ic ic-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             </span>
@@ -1600,14 +2348,8 @@
         function renderPagination() {
             const pagination = document.getElementById('pagination');
             const totalNotes = getFilteredSortedNotes().length;
-
-            if (totalNotes === 0) {
-                pagination.innerHTML = '';
-                return;
-            }
-
+            if (totalNotes === 0) { pagination.innerHTML = ''; return; }
             const totalPages = getTotalPages();
-
             if (totalPages <= 1) {
                 pagination.innerHTML = `<span class="page-info">Trang 1 / 1</span>`;
                 return;
@@ -1615,19 +2357,13 @@
 
             let html = '';
             html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">${ICONS.chevronL}</button>`;
-
             const pages = getPageNumbers(currentPage, totalPages);
             pages.forEach(p => {
-                if (p === '...') {
-                    html += `<span class="page-info">…</span>`;
-                } else {
-                    html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
-                }
+                if (p === '...') html += `<span class="page-info">…</span>`;
+                else html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
             });
-
             html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">${ICONS.chevronR}</button>`;
             html += `<span class="page-info">Trang ${currentPage} / ${totalPages}</span>`;
-
             pagination.innerHTML = html;
         }
 
@@ -1636,13 +2372,9 @@
             const range = [];
             const rangeWithDots = [];
             let l;
-
             for (let i = 1; i <= total; i++) {
-                if (i === 1 || i === total || (i >= current - delta && i <= current + delta)) {
-                    range.push(i);
-                }
+                if (i === 1 || i === total || (i >= current - delta && i <= current + delta)) range.push(i);
             }
-
             for (let i of range) {
                 if (l) {
                     if (i - l === 2) rangeWithDots.push(l + 1);
@@ -1651,7 +2383,6 @@
                 rangeWithDots.push(i);
                 l = i;
             }
-
             return rangeWithDots;
         }
 
@@ -1671,7 +2402,23 @@
 
             currentNoteId = id;
             document.getElementById('modalTime').textContent = formatTime(note.createdAt);
+
+            // Folder tag
+            const tag = document.getElementById('modalFolderTag');
+            const tagText = document.getElementById('modalFolderTagText');
+            if (note.folderId) {
+                const f = getFolderById(note.folderId);
+                if (f) {
+                    tag.style.display = 'inline-flex';
+                    tagText.textContent = f.name;
+                } else tag.style.display = 'none';
+            } else tag.style.display = 'none';
+
             document.getElementById('modalContent').textContent = note.content;
+            document.getElementById('modalFolderRow').classList.remove('show');
+            refreshFolderSelects();
+            document.getElementById('modalFolderSelect').value = note.folderId || '';
+
             exitEditMode();
             document.getElementById('modalOverlay').classList.add('open');
         }
@@ -1679,6 +2426,7 @@
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('open');
             currentNoteId = null;
+            document.getElementById('modalFolderRow').classList.remove('show');
             exitEditMode();
         }
 
@@ -1697,8 +2445,10 @@
 
             document.getElementById('modalEditBtn').style.display = 'none';
             document.getElementById('modalDeleteBtn').style.display = 'none';
+            document.getElementById('modalFolderMoveBtn').style.display = 'none';
             document.getElementById('modalSaveBtn').classList.add('show');
             document.getElementById('modalCancelBtn').classList.add('show');
+            document.getElementById('modalFolderRow').classList.remove('show');
         }
 
         function exitEditMode() {
@@ -1711,42 +2461,86 @@
 
             document.getElementById('modalEditBtn').style.display = '';
             document.getElementById('modalDeleteBtn').style.display = '';
+            document.getElementById('modalFolderMoveBtn').style.display = '';
             document.getElementById('modalSaveBtn').classList.remove('show');
             document.getElementById('modalCancelBtn').classList.remove('show');
+            document.getElementById('modalFolderRow').classList.remove('show');
+        }
+
+        function toggleFolderMove() {
+            const row = document.getElementById('modalFolderRow');
+            const notes = getNotes();
+            const note = notes.find(n => n.id === currentNoteId);
+            if (!note) return;
+
+            if (row.classList.contains('show')) {
+                row.classList.remove('show');
+            } else {
+                refreshFolderSelects();
+                document.getElementById('modalFolderSelect').value = note.folderId || '';
+                row.classList.add('show');
+            }
         }
 
         function saveModalEdit() {
             const editArea = document.getElementById('modalEditArea');
             const newContent = editArea.value.trim();
-
-            if (!newContent) {
-                alert('Nội dung không được để trống!');
-                return;
-            }
+            if (!newContent) { alert('Nội dung không được để trống!'); return; }
 
             const notes = getNotes();
             const note = notes.find(n => n.id === currentNoteId);
             if (note) {
                 note.content = newContent;
                 note.updatedAt = new Date().toISOString();
+                // Nếu đang mở folder row thì áp dụng luôn
+                const row = document.getElementById('modalFolderRow');
+                if (row.classList.contains('show')) {
+                    const selVal = document.getElementById('modalFolderSelect').value;
+                    if (selVal) note.folderId = selVal;
+                    else delete note.folderId;
+                }
                 saveNotes(notes);
             }
 
             document.getElementById('modalContent').textContent = newContent;
             exitEditMode();
+            updateSearchUI();
+            updateFolderBtnLabel();
+            renderAll();
+        }
+
+        function moveNoteToFolder() {
+            const selVal = document.getElementById('modalFolderSelect').value;
+            const notes = getNotes();
+            const note = notes.find(n => n.id === currentNoteId);
+            if (!note) return;
+
+            if (selVal) note.folderId = selVal;
+            else delete note.folderId;
+            saveNotes(notes);
+
+            // Cập nhật tag
+            const tag = document.getElementById('modalFolderTag');
+            const tagText = document.getElementById('modalFolderTagText');
+            if (note.folderId) {
+                const f = getFolderById(note.folderId);
+                if (f) { tag.style.display = 'inline-flex'; tagText.textContent = f.name; }
+            } else tag.style.display = 'none';
+
+            document.getElementById('modalFolderRow').classList.remove('show');
+            updateFolderBtnLabel();
             renderAll();
         }
 
         function deleteModalNote() {
             if (!confirm('Bạn có chắc muốn xóa ghi chú này?')) return;
-
             const notes = getNotes().filter(n => n.id !== currentNoteId);
             saveNotes(notes);
-
             const totalPages = getTotalPages();
             if (currentPage > totalPages) currentPage = totalPages;
-
             closeModal();
+            updateSearchUI();
+            renderFolderList();
             renderAll();
         }
 
@@ -1754,6 +2548,13 @@
         function openEditor() {
             const editor = document.getElementById('editorSection');
             editor.classList.add('open');
+            refreshFolderSelects();
+            // Nếu đang ở folder cụ thể, chọn luôn folder đó
+            if (currentFolder !== 'all' && currentFolder !== 'none') {
+                document.getElementById('editorFolderSelect').value = currentFolder;
+            } else {
+                document.getElementById('editorFolderSelect').value = '';
+            }
             setTimeout(() => document.getElementById('noteInput').focus(), 200);
         }
 
@@ -1762,6 +2563,7 @@
             editor.classList.remove('open');
             const input = document.getElementById('noteInput');
             input.value = '';
+            document.getElementById('editorFolderSelect').value = '';
             updateCharCount();
         }
 
@@ -1770,16 +2572,23 @@
             const content = input.value.trim();
             if (!content) { input.focus(); return; }
 
+            const folderVal = document.getElementById('editorFolderSelect').value;
             const notes = getNotes();
-            notes.push({
+            const newNote = {
                 id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
                 content: content,
                 createdAt: new Date().toISOString()
-            });
+            };
+            if (folderVal) newNote.folderId = folderVal;
+
+            notes.push(newNote);
             saveNotes(notes);
 
             closeEditor();
             currentPage = 1;
+            updateSearchUI();
+            renderFolderList();
+            updateFolderBtnLabel();
             renderAll();
         }
 
@@ -1788,13 +2597,7 @@
             document.getElementById('charCount').textContent = `${input.value.length} ký tự`;
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ===== Khởi tạo =====
+        // ===== Init =====
         document.addEventListener('DOMContentLoaded', () => {
             const input = document.getElementById('noteInput');
             const toggleBtn = document.getElementById('toggleEditorBtn');
@@ -1802,6 +2605,7 @@
             const cancelBtn = document.getElementById('cancelBtn');
             const editor = document.getElementById('editorSection');
             const overlay = document.getElementById('modalOverlay');
+            const searchInput = document.getElementById('searchInput');
 
             toggleBtn.addEventListener('click', () => {
                 if (editor.classList.contains('open')) closeEditor();
@@ -1816,18 +2620,44 @@
                 else if (e.key === 'Escape') closeEditor();
             });
 
+            searchInput.addEventListener('input', handleSearchInput);
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') document.getElementById('searchPanel').classList.remove('open');
+            });
+
             overlay.addEventListener('click', closeModal);
             document.getElementById('modalEditBtn').addEventListener('click', enterEditMode);
             document.getElementById('modalDeleteBtn').addEventListener('click', deleteModalNote);
             document.getElementById('modalSaveBtn').addEventListener('click', saveModalEdit);
             document.getElementById('modalCancelBtn').addEventListener('click', exitEditMode);
+            document.getElementById('modalFolderMoveBtn').addEventListener('click', toggleFolderMove);
+            document.getElementById('modalFolderSelect').addEventListener('change', moveNoteToFolder);
 
             document.getElementById('modalEditArea').addEventListener('keydown', (e) => {
                 if (e.ctrlKey && e.key === 'Enter') saveModalEdit();
                 else if (e.key === 'Escape') exitEditMode();
             });
 
+            // Prompt events
+            document.getElementById('promptConfirmBtn').addEventListener('click', confirmPrompt);
+            document.getElementById('promptInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') confirmPrompt();
+                else if (e.key === 'Escape') closePrompt();
+            });
+            document.getElementById('promptModal').addEventListener('click', closePrompt);
+
             document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    closeAllPanels();
+                    const panel = document.getElementById('searchPanel');
+                    panel.classList.add('open');
+                    setTimeout(() => {
+                        searchInput.focus();
+                        searchInput.select();
+                    }, 80);
+                    return;
+                }
                 if (e.key === 'Escape' && overlay.classList.contains('open')) {
                     const editArea = document.getElementById('modalEditArea');
                     if (editArea.classList.contains('show')) exitEditMode();
@@ -1847,6 +2677,10 @@
 
             document.querySelector('.filter-option[data-filter="all"]').classList.add('selected');
 
+            refreshFolderSelects();
+            renderFolderList();
+            updateSearchUI();
+            updateActiveBar();
             renderAll();
         });
     </script>
